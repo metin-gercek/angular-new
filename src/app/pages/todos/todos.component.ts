@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, computed, inject, OnInit } from '@angular/core';
+import { TodoService } from '../../services/todo.service';
+import { Todo } from '../../models/todo.type';
 
 @Component({
   selector: 'app-todos',
@@ -6,6 +8,15 @@ import { Component } from '@angular/core';
   templateUrl: './todos.component.html',
   styleUrl: './todos.component.css'
 })
-export class TodosComponent {
+export class TodosComponent implements OnInit {
+
+  todoService = inject(TodoService);
+  todos = computed<Todo[]>(() => this.todoService.todoItems());
+  
+  ngOnInit(): void {
+    console.log(this.todoService.todoItems());
+    
+  }
+  
 
 }

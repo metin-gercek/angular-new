@@ -5,7 +5,7 @@ import { RouterLink } from '@angular/router';
   selector: 'app-header',
   imports: [RouterLink],
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  styleUrl: './header.component.css'
 })
 export class HeaderComponent {
   title = input.required<string>();
