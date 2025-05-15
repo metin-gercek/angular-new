@@ -1,10 +1,12 @@
+@if(todos().length === 0) {
+  <p>Loading...</p>
+} 
+
 <ul>
   @for (item of todos(); track item.id) {
   <li>
-    <h2>{{ item.title }}</h2>
-    <p>{{ item.userId }}</p>
-    <p>{{ item.completed }}</p>
-    <p>{{ item.id }}</p>
+    <input id="item-{{item.id}}" type="checkbox" title="todos" [value]="item.completed" [checked]="item.completed" />
+    <label for="item-{{item.id}}">{{ item.title }}</label>
   </li>
   }
 </ul>

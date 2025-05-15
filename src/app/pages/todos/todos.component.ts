@@ -12,11 +12,19 @@ export class TodosComponent implements OnInit {
 
   todoService = inject(TodoService);
   todos = computed<Todo[]>(() => this.todoService.todoItems());
-  
+         
   ngOnInit(): void {
-    console.log(this.todoService.todoItems());
     
+    this.todoService.findAllTodos().subscribe({
+      next: (res) => {
+        this.todoService.todoItems.set(res);
+        console.log(res);
+      },
+      error: (error) => {
+        console.error('Error fetching todos:', error);
+      }
+    });
   }
-  
+
 
 }

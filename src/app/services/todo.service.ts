@@ -1,14 +1,24 @@
-import { Injectable, signal } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { Todo } from '../models/todo.type';
+import { HttpClient } from '@angular/common/http';
+import { catchError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TodoService {
-  todoItems = signal<Todo[]>([
-    { id: 1, userId: 1, title: 'Todo 1', completed: false },
-    { id: 2, userId: 1, title: 'Todo 2', completed: true },
-    { id: 3, userId: 2, title: 'Todo 3', completed: false },
-    { id: 4, userId: 2, title: 'Todo 4', completed: true }
-  ])
+
+  http = inject(HttpClient);
+
+  todoItems = signal<Todo[]>([]);
+
+  findAllTodos() {
+    const url = "https://jsonplaceholder.typicode.com/todos";
+    return this.http.get<Todo[]>(url).pipe(
+      catchError((error) => {
+        console.error('Error fetching todos:', error);
+        throw error;
+      })
+     );
+  }
 }
