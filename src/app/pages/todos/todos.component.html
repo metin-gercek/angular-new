@@ -1,9 +1,17 @@
+<form action="">
+  <input 
+    type="search" 
+    placeholder="Search todos" 
+    name="searchBy"
+    [(ngModel)]="searchBy" />
+</form>
+
 @if(todos().length === 0) {
 <p>Loading...</p>
 }
 
 <ul>
-  @for (item of todos(); track item.id) {
+  @for (item of todos() | filterTodo: searchBy(); track item.id) {
   <li appHighlightTodo [isComplete]="item.completed">
     <input
       id="item-{{ item.id }}"
@@ -13,7 +21,7 @@
       [checked]="item.completed"
       (change)="handleCompleteTodo(item.id)"
     />
-    <label for="item-{{ item.id }}">{{ item.title }}</label>
+    <label for="item-{{ item.id }}">{{ item.title | titlecase }}</label>
   </li>
   }
 </ul>

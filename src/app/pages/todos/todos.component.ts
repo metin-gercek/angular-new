@@ -1,17 +1,21 @@
-import { Component, computed, inject, OnInit } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { TodoService } from '../../services/todo.service';
 import { Todo } from '../../models/todo.type';
 import { HighlightTodoDirective } from '../../directives/highlight-todo.directive';
+import { TitleCasePipe } from '@angular/common';
+import { FilterTodoPipe } from '../../pipes/filter-todo.pipe';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-todos',
-  imports: [HighlightTodoDirective],
+  imports: [HighlightTodoDirective, TitleCasePipe, FilterTodoPipe, FormsModule],
   templateUrl: './todos.component.html',
   styleUrl: './todos.component.css',
 })
 export class TodosComponent implements OnInit {
   todoService = inject(TodoService);
   todos = computed<Todo[]>(() => this.todoService.todoItems());
+  searchBy = signal<string>('');
 
   ngOnInit(): void {
     this.todoService.findAllTodos().subscribe({
