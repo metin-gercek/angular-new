@@ -13,6 +13,12 @@ export const routes: Routes = [
         loadComponent: () =>{
             return import('./pages/todos/todos.component').then((m) => m.TodosComponent)
         }
+    },
+    {
+        path: 'profile',
+        loadComponent: () =>{
+            return import('./pages/profile/profile.component').then((m) => m.ProfileComponent)
+        }
     }
 
     ]
